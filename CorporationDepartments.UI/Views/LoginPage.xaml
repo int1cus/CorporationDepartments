@@ -1,0 +1,74 @@
+﻿<Page x:Class="CorporationDepartments.UI.Views.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CorporationDepartments.UI.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1280"
+      Title="Вход">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Отделы кадров"
+                  Style="{StaticResource HeaderH1Style}"
+                  HorizontalAlignment="Center"
+                  Margin="0,20,0,40"/>
+
+        <Border Grid.Row="1" 
+                Style="{StaticResource CardStyle}"
+                Width="300"
+                VerticalAlignment="Center"
+                Margin="20">
+            <StackPanel>
+                <!-- Сообщение об ошибке -->
+                <TextBlock Text="{Binding ErrorMessage}"
+                          Style="{StaticResource ErrorTextStyle}"
+                          TextWrapping="Wrap"
+                          Margin="0,0,0,10"
+                          Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
+
+                <!-- Имя пользователя -->
+                <TextBlock Text="Имя пользователя"
+                          Style="{StaticResource LabelTextStyle}"/>
+                <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource BaseTextBoxStyle}"
+                        Margin="0,5,0,15"/>
+
+                <!-- Пароль -->
+                <TextBlock Text="Пароль"
+                          Style="{StaticResource LabelTextStyle}"/>
+                <PasswordBox x:Name="PasswordBox"
+                           Style="{StaticResource BasePasswordBoxStyle}"
+                           Height="40"
+                           Margin="0,5,0,15"/>
+
+                <!-- Кнопка входа -->
+                <Button Content="Войти"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Command="{Binding LoginCommand}"
+                        Margin="0,10,0,10"
+                        IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}"/>
+
+                <!-- Индикатор загрузки -->
+                <ProgressBar IsIndeterminate="True"
+                           Height="2"
+                           Margin="0,5,0,15"
+                           Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                <!-- Ссылка на регистрацию -->
+                <TextBlock HorizontalAlignment="Center"
+                          Style="{StaticResource BodyTextStyle}">
+                    <Hyperlink Command="{Binding NavigateToRegisterCommand}"
+                              Foreground="{DynamicResource PrimaryBrush}">
+                        Создать новый аккаунт
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

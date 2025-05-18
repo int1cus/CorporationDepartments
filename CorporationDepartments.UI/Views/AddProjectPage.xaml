@@ -1,0 +1,141 @@
+﻿<Page x:Class="CorporationDepartments.UI.Views.AddProjectPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CorporationDepartments.UI.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Добавление проекта">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок с кнопкой "Назад" -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="← Назад"
+                    Command="{Binding BackCommand}"
+                    Style="{StaticResource TextButtonStyle}"
+                    HorizontalAlignment="Left"
+                    Margin="0,0,20,0"/>
+
+            <TextBlock Grid.Column="1" 
+                      Text="Добавление нового проекта"
+                      Style="{StaticResource HeaderH1Style}"/>
+        </Grid>
+
+        <!-- Индикатор загрузки (перекрывает весь контент) -->
+        <Grid Grid.Row="1" 
+             Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+             Panel.ZIndex="100">
+            <Rectangle Fill="{DynamicResource SurfaceBrush}" Opacity="0.7"/>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding LoadingMessage}"
+                         Style="{StaticResource BodyTextStyle}"
+                         HorizontalAlignment="Center"
+                         Margin="0,0,0,10"/>
+                <ProgressBar IsIndeterminate="True" 
+                          Width="200" 
+                          Height="4"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Форма проекта -->
+        <Border Grid.Row="1" 
+               Style="{StaticResource CardStyle}">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Имя проекта -->
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                         Text="Название проекта:" 
+                         Style="{StaticResource BodyTextStyle}" 
+                         VerticalAlignment="Center"/>
+
+                <TextBox Grid.Row="0" Grid.Column="1"
+                       Text="{Binding Project.Name, UpdateSourceTrigger=PropertyChanged}"
+                       Margin="0,5"
+                       Padding="5"/>
+
+                <!-- Описание проекта -->
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                         Text="Описание:" 
+                         Style="{StaticResource BodyTextStyle}" 
+                         VerticalAlignment="Center"/>
+
+                <TextBox Grid.Row="1" Grid.Column="1"
+                       Text="{Binding Project.Description, UpdateSourceTrigger=PropertyChanged}"
+                       Margin="0,5"
+                       Padding="5"
+                       TextWrapping="Wrap"
+                       AcceptsReturn="True"
+                       Height="100"/>
+
+                <!-- Бюджет проекта -->
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                         Text="Бюджет:" 
+                         Style="{StaticResource BodyTextStyle}" 
+                         VerticalAlignment="Center"/>
+
+                <TextBox Grid.Row="2" Grid.Column="1"
+                       Text="{Binding Project.Budget, UpdateSourceTrigger=PropertyChanged}"
+                       Margin="0,5"
+                       Padding="5"/>
+
+                <!-- Дата начала -->
+                <TextBlock Grid.Row="3" Grid.Column="0"
+                         Text="Дата начала:" 
+                         Style="{StaticResource BodyTextStyle}" 
+                         VerticalAlignment="Center"/>
+
+                <DatePicker Grid.Row="3" Grid.Column="1"
+                          SelectedDate="{Binding Project.StartDate}"
+                          Margin="0,5"/>
+
+                <!-- Дата окончания -->
+                <TextBlock Grid.Row="4" Grid.Column="0"
+                         Text="Дата окончания:" 
+                         Style="{StaticResource BodyTextStyle}" 
+                         VerticalAlignment="Center"/>
+
+                <DatePicker Grid.Row="4" Grid.Column="1"
+                          SelectedDate="{Binding Project.EndDate}"
+                          Margin="0,5"/>
+
+                <!-- Кнопки -->
+                <StackPanel Grid.Row="5" Grid.Column="1" 
+                         Orientation="Horizontal" 
+                         HorizontalAlignment="Right"
+                         Margin="0,20,0,0">
+                    <Button Content="Сохранить"
+                            Command="{Binding SaveCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Margin="0,0,10,0"/>
+
+                    <Button Content="Отмена"
+                            Command="{Binding CancelCommand}"
+                            Style="{StaticResource BaseButtonStyle}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

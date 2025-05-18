@@ -1,0 +1,112 @@
+﻿<Page x:Class="CorporationDepartments.UI.Views.RegisterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CorporationDepartments.UI.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1280"
+      Title="Регистрация">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Отделы кадров"
+                  Style="{StaticResource HeaderH1Style}"
+                  HorizontalAlignment="Center"
+                  Margin="0,20,0,40"/>
+
+        <ScrollViewer Grid.Row="1" 
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Disabled">
+            <Border Style="{StaticResource CardStyle}"
+                    Width="400"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="20,0,20,20">
+                <StackPanel>
+                    <!-- Сообщение об ошибке -->
+                    <TextBlock Text="{Binding ErrorMessage}"
+                              Style="{StaticResource ErrorTextStyle}"
+                              TextWrapping="Wrap"
+                              Margin="0,0,0,20"
+                              Visibility="{Binding ErrorMessage, Converter={StaticResource StringToVisibilityConverter}}"/>
+
+                    <!-- Фамилия -->
+                    <TextBlock Text="Фамилия *"
+                              Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource BaseTextBoxStyle}"
+                            Margin="0,5,0,15"/>
+
+                    <!-- Имя -->
+                    <TextBlock Text="Имя *"
+                              Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource BaseTextBoxStyle}"
+                            Margin="0,5,0,15"/>
+
+                    <!-- Отчество -->
+                    <TextBlock Text="Отчество"
+                              Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox Text="{Binding Patronymic, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource BaseTextBoxStyle}"
+                            Margin="0,5,0,15"/>
+
+                    <!-- Email -->
+                    <TextBlock Text="Email *"
+                              Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource BaseTextBoxStyle}"
+                            Margin="0,5,0,15"/>
+
+                    <!-- Номер телефона -->
+                    <TextBlock Text="Номер телефона *"
+                              Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource BaseTextBoxStyle}"
+                            Margin="0,5,0,15"/>
+
+                    <!-- Пароль -->
+                    <TextBlock Text="Пароль *"
+                              Style="{StaticResource LabelTextStyle}"/>
+                    <PasswordBox x:Name="PasswordBox"
+                               Style="{StaticResource BasePasswordBoxStyle}"
+                               Margin="0,5,0,15"/>
+
+                    <!-- Подтверждение пароля -->
+                    <TextBlock Text="Подтверждение пароля *"
+                              Style="{StaticResource LabelTextStyle}"/>
+                    <PasswordBox x:Name="ConfirmPasswordBox"
+                               Style="{StaticResource BasePasswordBoxStyle}"
+                               Margin="0,5,0,20"/>
+
+                    <!-- Кнопка регистрации -->
+                    <Button Content="Зарегистрироваться"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding RegisterCommand}"
+                            Margin="0,10,0,15"
+                            IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBooleanConverter}}"/>
+
+                    <!-- Индикатор загрузки -->
+                    <ProgressBar IsIndeterminate="True"
+                               Height="2"
+                               Margin="0,0,0,15"
+                               Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                    <!-- Ссылка на вход -->
+                    <TextBlock HorizontalAlignment="Center"
+                              Style="{StaticResource BodyTextStyle}">
+                        <Hyperlink Command="{Binding NavigateToLoginCommand}"
+                                  Foreground="{DynamicResource PrimaryBrush}">
+                            Уже есть аккаунт? Войти
+                        </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</Page>

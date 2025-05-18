@@ -1,0 +1,1251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище CorporationDepartmentsModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="AuditLogID" />
+          </Key>
+          <Property Name="AuditLogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RecordID" Type="int" Nullable="false" />
+          <Property Name="Action" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="FieldName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="OldValue" Type="nvarchar(max)" />
+          <Property Name="NewValue" Type="nvarchar(max)" />
+          <Property Name="ChangedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="ChangedAt" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="DepartmentBudgets">
+          <Key>
+            <PropertyRef Name="DepartmentBudgetID" />
+          </Key>
+          <Property Name="DepartmentBudgetID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="Budget" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="FiscalYear" Type="int" />
+          <Property Name="LastReviewDate" Type="date" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="DepartmentLocations">
+          <Key>
+            <PropertyRef Name="DepartmentLocationID" />
+          </Key>
+          <Property Name="DepartmentLocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="100" />
+          <Property Name="Floor" Type="nvarchar" MaxLength="50" />
+          <Property Name="Building" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+          <Property Name="HeadEmployeeID" Type="int" />
+        </EntityType>
+        <EntityType Name="EmployeeCompensation">
+          <Key>
+            <PropertyRef Name="EmployeeCompensationID" />
+          </Key>
+          <Property Name="EmployeeCompensationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="Salary" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="LastSalaryReviewDate" Type="date" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="EmployeeContacts">
+          <Key>
+            <PropertyRef Name="EmployeeContactID" />
+          </Key>
+          <Property Name="EmployeeContactID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="PasswordHash" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="EmployeeDepartments">
+          <Key>
+            <PropertyRef Name="EmployeeDepartmentID" />
+          </Key>
+          <Property Name="EmployeeDepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="EmployeeProfilePictures">
+          <Key>
+            <PropertyRef Name="EmployeeProfilePictureID" />
+          </Key>
+          <Property Name="EmployeeProfilePictureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="ProfilePicture" Type="varbinary(max)" />
+          <Property Name="ContentType" Type="nvarchar" MaxLength="100" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="255" />
+          <Property Name="FileSize" Type="int" />
+          <Property Name="UploadedAt" Type="datetime2" Precision="7" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="EmployeeProjects">
+          <Key>
+            <PropertyRef Name="EmployeeProjectID" />
+          </Key>
+          <Property Name="EmployeeProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="ProjectID" Type="int" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="100" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="HoursPerWeek" Type="int" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+          <Property Name="HireDate" Type="date" Nullable="false" />
+          <Property Name="PositionID" Type="int" Nullable="false" />
+          <Property Name="CurrentDepartmentID" Type="int" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Positions">
+          <Key>
+            <PropertyRef Name="PositionID" />
+          </Key>
+          <Property Name="PositionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="ProjectBudgets">
+          <Key>
+            <PropertyRef Name="ProjectBudgetID" />
+          </Key>
+          <Property Name="ProjectBudgetID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectID" Type="int" Nullable="false" />
+          <Property Name="Budget" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BudgetApprovalDate" Type="date" />
+          <Property Name="LastReviewDate" Type="date" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="DepartmentID" Type="int" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="ProjectTimelines">
+          <Key>
+            <PropertyRef Name="ProjectTimelineID" />
+          </Key>
+          <Property Name="ProjectTimelineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="Status" Type="nvarchar" MaxLength="20" />
+          <Property Name="LastStatusUpdate" Type="datetime2" Precision="7" />
+          <Property Name="CreatedDate" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_DepartmentBudgets_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="DepartmentBudgets" Type="Self.DepartmentBudgets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="DepartmentBudgets">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentLocations_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="DepartmentLocations" Type="Self.DepartmentLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="DepartmentLocations">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Departments_HeadEmployee">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Departments" Type="Self.Departments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Departments">
+              <PropertyRef Name="HeadEmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeCompensation_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeCompensation" Type="Self.EmployeeCompensation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="EmployeeCompensation">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeContacts_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeContacts" Type="Self.EmployeeContacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="EmployeeContacts">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDepartments_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="EmployeeDepartments" Type="Self.EmployeeDepartments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="EmployeeDepartments">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDepartments_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeDepartments" Type="Self.EmployeeDepartments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="EmployeeDepartments">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeProfilePictures_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeProfilePictures" Type="Self.EmployeeProfilePictures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="EmployeeProfilePictures">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeProjects_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeProjects" Type="Self.EmployeeProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="EmployeeProjects">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeProjects_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="EmployeeProjects" Type="Self.EmployeeProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="EmployeeProjects">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="CurrentDepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Positions">
+          <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectBudgets_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="ProjectBudgets" Type="Self.ProjectBudgets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="ProjectBudgets">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projects_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTimelines_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="ProjectTimelines" Type="Self.ProjectTimelines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="ProjectTimelines">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="Хранилище CorporationDepartmentsModelContainer">
+          <EntitySet Name="AuditLog" EntityType="Self.AuditLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DepartmentBudgets" EntityType="Self.DepartmentBudgets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DepartmentLocations" EntityType="Self.DepartmentLocations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeCompensation" EntityType="Self.EmployeeCompensation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeContacts" EntityType="Self.EmployeeContacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeDepartments" EntityType="Self.EmployeeDepartments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeProfilePictures" EntityType="Self.EmployeeProfilePictures" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeProjects" EntityType="Self.EmployeeProjects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Positions" EntityType="Self.Positions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectBudgets" EntityType="Self.ProjectBudgets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectTimelines" EntityType="Self.ProjectTimelines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DepartmentBudgets_Departments" Association="Self.FK_DepartmentBudgets_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="DepartmentBudgets" EntitySet="DepartmentBudgets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentLocations_Departments" Association="Self.FK_DepartmentLocations_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="DepartmentLocations" EntitySet="DepartmentLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Departments_HeadEmployee" Association="Self.FK_Departments_HeadEmployee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Departments" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeCompensation_Employees" Association="Self.FK_EmployeeCompensation_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeCompensation" EntitySet="EmployeeCompensation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeContacts_Employees" Association="Self.FK_EmployeeContacts_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeContacts" EntitySet="EmployeeContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDepartments_Departments" Association="Self.FK_EmployeeDepartments_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="EmployeeDepartments" EntitySet="EmployeeDepartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDepartments_Employees" Association="Self.FK_EmployeeDepartments_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeDepartments" EntitySet="EmployeeDepartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeProfilePictures_Employees" Association="Self.FK_EmployeeProfilePictures_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeProfilePictures" EntitySet="EmployeeProfilePictures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeProjects_Employees" Association="Self.FK_EmployeeProjects_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeProjects" EntitySet="EmployeeProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeProjects_Projects" Association="Self.FK_EmployeeProjects_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="EmployeeProjects" EntitySet="EmployeeProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Departments" Association="Self.FK_Employees_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Positions" Association="Self.FK_Employees_Positions">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectBudgets_Projects" Association="Self.FK_ProjectBudgets_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="ProjectBudgets" EntitySet="ProjectBudgets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projects_Departments" Association="Self.FK_Projects_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTimelines_Projects" Association="Self.FK_ProjectTimelines_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="ProjectTimelines" EntitySet="ProjectTimelines" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CorporationDepartmentsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="AuditLogID" />
+          </Key>
+          <Property Name="AuditLogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TableName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RecordID" Type="Int32" Nullable="false" />
+          <Property Name="Action" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FieldName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OldValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ChangedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ChangedAt" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="DepartmentBudgets">
+          <Key>
+            <PropertyRef Name="DepartmentBudgetID" />
+          </Key>
+          <Property Name="DepartmentBudgetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <Property Name="Budget" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="FiscalYear" Type="Int32" />
+          <Property Name="LastReviewDate" Type="DateTime" Precision="0" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK_DepartmentBudgets_Departments" FromRole="DepartmentBudgets" ToRole="Departments" />
+        </EntityType>
+        <EntityType Name="DepartmentLocations">
+          <Key>
+            <PropertyRef Name="DepartmentLocationID" />
+          </Key>
+          <Property Name="DepartmentLocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Floor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Building" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK_DepartmentLocations_Departments" FromRole="DepartmentLocations" ToRole="Departments" />
+        </EntityType>
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="DepartmentBudgets" Relationship="Self.FK_DepartmentBudgets_Departments" FromRole="Departments" ToRole="DepartmentBudgets" />
+          <NavigationProperty Name="DepartmentLocations" Relationship="Self.FK_DepartmentLocations_Departments" FromRole="Departments" ToRole="DepartmentLocations" />
+          <NavigationProperty Name="EmployeeDepartments" Relationship="Self.FK_EmployeeDepartments_Departments" FromRole="Departments" ToRole="EmployeeDepartments" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employees_Departments" FromRole="Departments" ToRole="Employees" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_Projects_Departments" FromRole="Departments" ToRole="Projects" />
+          <Property Name="HeadEmployeeID" Type="Int32" />
+          <NavigationProperty Name="HeadEmployee" Relationship="CorporationDepartmentsModel.FK_Departments_HeadEmployee" FromRole="Departments" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="EmployeeCompensation">
+          <Key>
+            <PropertyRef Name="EmployeeCompensationID" />
+          </Key>
+          <Property Name="EmployeeCompensationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="Salary" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="LastSalaryReviewDate" Type="DateTime" Precision="0" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_EmployeeCompensation_Employees" FromRole="EmployeeCompensation" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="EmployeeContacts">
+          <Key>
+            <PropertyRef Name="EmployeeContactID" />
+          </Key>
+          <Property Name="EmployeeContactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_EmployeeContacts_Employees" FromRole="EmployeeContacts" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="EmployeeDepartments">
+          <Key>
+            <PropertyRef Name="EmployeeDepartmentID" />
+          </Key>
+          <Property Name="EmployeeDepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK_EmployeeDepartments_Departments" FromRole="EmployeeDepartments" ToRole="Departments" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_EmployeeDepartments_Employees" FromRole="EmployeeDepartments" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="EmployeeProfilePictures">
+          <Key>
+            <PropertyRef Name="EmployeeProfilePictureID" />
+          </Key>
+          <Property Name="EmployeeProfilePictureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="ProfilePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ContentType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FileName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="FileSize" Type="Int32" />
+          <Property Name="UploadedAt" Type="DateTime" Precision="7" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_EmployeeProfilePictures_Employees" FromRole="EmployeeProfilePictures" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="EmployeeProjects">
+          <Key>
+            <PropertyRef Name="EmployeeProjectID" />
+          </Key>
+          <Property Name="EmployeeProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="HoursPerWeek" Type="Int32" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_EmployeeProjects_Employees" FromRole="EmployeeProjects" ToRole="Employees" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_EmployeeProjects_Projects" FromRole="EmployeeProjects" ToRole="Projects" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HireDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PositionID" Type="Int32" Nullable="false" />
+          <Property Name="CurrentDepartmentID" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK_Employees_Departments" FromRole="Employees" ToRole="Departments" />
+          <NavigationProperty Name="EmployeeCompensation" Relationship="Self.FK_EmployeeCompensation_Employees" FromRole="Employees" ToRole="EmployeeCompensation" />
+          <NavigationProperty Name="EmployeeContacts" Relationship="Self.FK_EmployeeContacts_Employees" FromRole="Employees" ToRole="EmployeeContacts" />
+          <NavigationProperty Name="EmployeeDepartments" Relationship="Self.FK_EmployeeDepartments_Employees" FromRole="Employees" ToRole="EmployeeDepartments" />
+          <NavigationProperty Name="EmployeeProfilePictures" Relationship="Self.FK_EmployeeProfilePictures_Employees" FromRole="Employees" ToRole="EmployeeProfilePictures" />
+          <NavigationProperty Name="EmployeeProjects" Relationship="Self.FK_EmployeeProjects_Employees" FromRole="Employees" ToRole="EmployeeProjects" />
+          <NavigationProperty Name="Positions" Relationship="Self.FK_Employees_Positions" FromRole="Employees" ToRole="Positions" />
+          <NavigationProperty Name="Departments1" Relationship="CorporationDepartmentsModel.FK_Departments_HeadEmployee" FromRole="Employees" ToRole="Departments" />
+        </EntityType>
+        <EntityType Name="Positions">
+          <Key>
+            <PropertyRef Name="PositionID" />
+          </Key>
+          <Property Name="PositionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employees_Positions" FromRole="Positions" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="ProjectBudgets">
+          <Key>
+            <PropertyRef Name="ProjectBudgetID" />
+          </Key>
+          <Property Name="ProjectBudgetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
+          <Property Name="Budget" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BudgetApprovalDate" Type="DateTime" Precision="0" />
+          <Property Name="LastReviewDate" Type="DateTime" Precision="0" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_ProjectBudgets_Projects" FromRole="ProjectBudgets" ToRole="Projects" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Name="ProjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentID" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK_Projects_Departments" FromRole="Projects" ToRole="Departments" />
+          <NavigationProperty Name="EmployeeProjects" Relationship="Self.FK_EmployeeProjects_Projects" FromRole="Projects" ToRole="EmployeeProjects" />
+          <NavigationProperty Name="ProjectBudgets" Relationship="Self.FK_ProjectBudgets_Projects" FromRole="Projects" ToRole="ProjectBudgets" />
+          <NavigationProperty Name="ProjectTimelines" Relationship="Self.FK_ProjectTimelines_Projects" FromRole="Projects" ToRole="ProjectTimelines" />
+        </EntityType>
+        <EntityType Name="ProjectTimelines">
+          <Key>
+            <PropertyRef Name="ProjectTimelineID" />
+          </Key>
+          <Property Name="ProjectTimelineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LastStatusUpdate" Type="DateTime" Precision="7" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_ProjectTimelines_Projects" FromRole="ProjectTimelines" ToRole="Projects" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_DepartmentBudgets_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="DepartmentBudgets" Type="Self.DepartmentBudgets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="DepartmentBudgets">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentLocations_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="DepartmentLocations" Type="Self.DepartmentLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="DepartmentLocations">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDepartments_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="EmployeeDepartments" Type="Self.EmployeeDepartments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="EmployeeDepartments">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="CurrentDepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projects_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="0..1" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeCompensation_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeCompensation" Type="Self.EmployeeCompensation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="EmployeeCompensation">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeContacts_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeContacts" Type="Self.EmployeeContacts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="EmployeeContacts">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeDepartments_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeDepartments" Type="Self.EmployeeDepartments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="EmployeeDepartments">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeProfilePictures_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeProfilePictures" Type="Self.EmployeeProfilePictures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="EmployeeProfilePictures">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeProjects_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeProjects" Type="Self.EmployeeProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="EmployeeProjects">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeProjects_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="EmployeeProjects" Type="Self.EmployeeProjects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="EmployeeProjects">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Positions">
+          <End Role="Positions" Type="Self.Positions" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Positions">
+              <PropertyRef Name="PositionID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectBudgets_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="ProjectBudgets" Type="Self.ProjectBudgets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="ProjectBudgets">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTimelines_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="ProjectTimelines" Type="Self.ProjectTimelines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="ProjectTimelines">
+              <PropertyRef Name="ProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CorporationDepartmentsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AuditLog" EntityType="Self.AuditLog" />
+          <EntitySet Name="DepartmentBudgets" EntityType="Self.DepartmentBudgets" />
+          <EntitySet Name="DepartmentLocations" EntityType="Self.DepartmentLocations" />
+          <EntitySet Name="Departments" EntityType="Self.Departments" />
+          <EntitySet Name="EmployeeCompensation" EntityType="Self.EmployeeCompensation" />
+          <EntitySet Name="EmployeeContacts" EntityType="Self.EmployeeContacts" />
+          <EntitySet Name="EmployeeDepartments" EntityType="Self.EmployeeDepartments" />
+          <EntitySet Name="EmployeeProfilePictures" EntityType="Self.EmployeeProfilePictures" />
+          <EntitySet Name="EmployeeProjects" EntityType="Self.EmployeeProjects" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="Positions" EntityType="Self.Positions" />
+          <EntitySet Name="ProjectBudgets" EntityType="Self.ProjectBudgets" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" />
+          <EntitySet Name="ProjectTimelines" EntityType="Self.ProjectTimelines" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_DepartmentBudgets_Departments" Association="Self.FK_DepartmentBudgets_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="DepartmentBudgets" EntitySet="DepartmentBudgets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentLocations_Departments" Association="Self.FK_DepartmentLocations_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="DepartmentLocations" EntitySet="DepartmentLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDepartments_Departments" Association="Self.FK_EmployeeDepartments_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="EmployeeDepartments" EntitySet="EmployeeDepartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Departments" Association="Self.FK_Employees_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projects_Departments" Association="Self.FK_Projects_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeCompensation_Employees" Association="Self.FK_EmployeeCompensation_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeCompensation" EntitySet="EmployeeCompensation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeContacts_Employees" Association="Self.FK_EmployeeContacts_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeContacts" EntitySet="EmployeeContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeDepartments_Employees" Association="Self.FK_EmployeeDepartments_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeDepartments" EntitySet="EmployeeDepartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeProfilePictures_Employees" Association="Self.FK_EmployeeProfilePictures_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeProfilePictures" EntitySet="EmployeeProfilePictures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeProjects_Employees" Association="Self.FK_EmployeeProjects_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeProjects" EntitySet="EmployeeProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeProjects_Projects" Association="Self.FK_EmployeeProjects_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="EmployeeProjects" EntitySet="EmployeeProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Positions" Association="Self.FK_Employees_Positions">
+            <End Role="Positions" EntitySet="Positions" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectBudgets_Projects" Association="Self.FK_ProjectBudgets_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="ProjectBudgets" EntitySet="ProjectBudgets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTimelines_Projects" Association="Self.FK_ProjectTimelines_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="ProjectTimelines" EntitySet="ProjectTimelines" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(CorporationDepartmentsModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(CorporationDepartmentsModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <AssociationSet Name="FK_Departments_HeadEmployee" Association="CorporationDepartmentsModel.FK_Departments_HeadEmployee">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Departments" EntitySet="Departments" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <Association Name="FK_Departments_HeadEmployee">
+          <End Type="CorporationDepartmentsModel.Employees" Role="Employees" Multiplicity="0..1" />
+          <End Type="CorporationDepartmentsModel.Departments" Role="Departments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Departments">
+              <PropertyRef Name="HeadEmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище CorporationDepartmentsModelContainer" CdmEntityContainer="CorporationDepartmentsEntities">
+          <EntitySetMapping Name="AuditLog">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.AuditLog">
+              <MappingFragment StoreEntitySet="AuditLog">
+                <ScalarProperty Name="AuditLogID" ColumnName="AuditLogID" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="RecordID" ColumnName="RecordID" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+                <ScalarProperty Name="OldValue" ColumnName="OldValue" />
+                <ScalarProperty Name="NewValue" ColumnName="NewValue" />
+                <ScalarProperty Name="ChangedBy" ColumnName="ChangedBy" />
+                <ScalarProperty Name="ChangedAt" ColumnName="ChangedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DepartmentBudgets">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.DepartmentBudgets">
+              <MappingFragment StoreEntitySet="DepartmentBudgets">
+                <ScalarProperty Name="DepartmentBudgetID" ColumnName="DepartmentBudgetID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="FiscalYear" ColumnName="FiscalYear" />
+                <ScalarProperty Name="LastReviewDate" ColumnName="LastReviewDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DepartmentLocations">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.DepartmentLocations">
+              <MappingFragment StoreEntitySet="DepartmentLocations">
+                <ScalarProperty Name="DepartmentLocationID" ColumnName="DepartmentLocationID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="Building" ColumnName="Building" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.Departments">
+              <MappingFragment StoreEntitySet="Departments">
+                <ScalarProperty Name="HeadEmployeeID" ColumnName="HeadEmployeeID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeCompensation">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.EmployeeCompensation">
+              <MappingFragment StoreEntitySet="EmployeeCompensation">
+                <ScalarProperty Name="EmployeeCompensationID" ColumnName="EmployeeCompensationID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="LastSalaryReviewDate" ColumnName="LastSalaryReviewDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeContacts">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.EmployeeContacts">
+              <MappingFragment StoreEntitySet="EmployeeContacts">
+                <ScalarProperty Name="EmployeeContactID" ColumnName="EmployeeContactID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeDepartments">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.EmployeeDepartments">
+              <MappingFragment StoreEntitySet="EmployeeDepartments">
+                <ScalarProperty Name="EmployeeDepartmentID" ColumnName="EmployeeDepartmentID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeProfilePictures">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.EmployeeProfilePictures">
+              <MappingFragment StoreEntitySet="EmployeeProfilePictures">
+                <ScalarProperty Name="EmployeeProfilePictureID" ColumnName="EmployeeProfilePictureID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="UploadedAt" ColumnName="UploadedAt" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeProjects">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.EmployeeProjects">
+              <MappingFragment StoreEntitySet="EmployeeProjects">
+                <ScalarProperty Name="EmployeeProjectID" ColumnName="EmployeeProjectID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="HoursPerWeek" ColumnName="HoursPerWeek" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+                <ScalarProperty Name="CurrentDepartmentID" ColumnName="CurrentDepartmentID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Positions">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.Positions">
+              <MappingFragment StoreEntitySet="Positions">
+                <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectBudgets">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.ProjectBudgets">
+              <MappingFragment StoreEntitySet="ProjectBudgets">
+                <ScalarProperty Name="ProjectBudgetID" ColumnName="ProjectBudgetID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="Budget" ColumnName="Budget" />
+                <ScalarProperty Name="BudgetApprovalDate" ColumnName="BudgetApprovalDate" />
+                <ScalarProperty Name="LastReviewDate" ColumnName="LastReviewDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.Projects">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectTimelines">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.ProjectTimelines">
+              <MappingFragment StoreEntitySet="ProjectTimelines">
+                <ScalarProperty Name="ProjectTimelineID" ColumnName="ProjectTimelineID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LastStatusUpdate" ColumnName="LastStatusUpdate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CorporationDepartmentsModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище CorporationDepartmentsModel.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище CorporationDepartmentsModel.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище CorporationDepartmentsModel.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище CorporationDepartmentsModel.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CorporationDepartmentsModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище CorporationDepartmentsModel.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CorporationDepartmentsModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище CorporationDepartmentsModel.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище CorporationDepartmentsModel.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:CorporationDepartments.UI.Converters">
+
+    <!-- Конвертер для преобразования логического значения в видимость -->
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+    <!-- Конвертер для инверсии логического значения -->
+    <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+
+    <!-- Конвертер для преобразования строки в видимость -->
+    <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+
+    <!-- Конвертер для преобразования инвертированного логического значения в видимость -->
+    <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+
+    <!-- Конвертер для подсказок действий -->
+    <converters:SelfActionToolTipConverter x:Key="SelfActionToolTipConverter"/>
+</ResourceDictionary>

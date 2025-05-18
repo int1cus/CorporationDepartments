@@ -1,0 +1,544 @@
+﻿<Page x:Class="CorporationDepartments.UI.Views.DepartmentDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CorporationDepartments.UI.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Детали отдела">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок с кнопкой "Назад" -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="← Назад"
+                    Command="{Binding BackCommand}"
+                    Style="{StaticResource TextButtonStyle}"
+                    HorizontalAlignment="Left"
+                    Margin="0,0,20,0"/>
+
+            <TextBlock Grid.Column="1" 
+                      Text="{Binding PageTitle}"
+                      Style="{StaticResource HeaderH1Style}"/>
+
+            <!-- Кнопки управления -->
+            <Button Grid.Column="2"
+                    Content="Редактировать"
+                    Command="{Binding EditCommand}"
+                    Style="{StaticResource BaseButtonStyle}"
+                    Margin="5,0"
+                    Visibility="{Binding CanEdit, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+            <Button Grid.Column="3"
+                    Content="Сохранить"
+                    Command="{Binding SaveCommand}"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Margin="5,0"
+                    Visibility="{Binding CanSave, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+            <Button Grid.Column="4"
+                    Content="Отмена"
+                    Command="{Binding CancelCommand}"
+                    Style="{StaticResource BaseButtonStyle}"
+                    Margin="5,0"
+                    Visibility="{Binding CanCancel, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        </Grid>
+
+        <!-- Индикатор загрузки (перекрывает весь контент) -->
+        <Grid Grid.Row="1" 
+             Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+             Panel.ZIndex="100">
+            <Rectangle Fill="{DynamicResource SurfaceBrush}" Opacity="0.7"/>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding LoadingMessage}"
+                         Style="{StaticResource BodyTextStyle}"
+                         HorizontalAlignment="Center"
+                         Margin="0,0,0,10"/>
+                <ProgressBar IsIndeterminate="True" 
+                          Width="200" 
+                          Height="4"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Основное содержимое -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Левая колонка с основной информацией -->
+            <Grid Grid.Column="0" Margin="0,0,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Руководство отдела -->
+                <Border Grid.Row="0" 
+                       Style="{StaticResource CardStyle}"
+                       Margin="0,0,0,20">
+                    <Grid Margin="15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Руководитель отдела"
+                                     Style="{StaticResource HeaderH2Style}"
+                                     Margin="0,0,0,10"/>
+
+                            <TextBlock Text="{Binding Department.HeadEmployeeName}"
+                                     Style="{StaticResource BodyTextStyle}"/>
+                        </StackPanel>
+
+                        <Button Grid.Column="1"
+                                Content="Изменить"
+                                Command="{Binding SelectHeadCommand}"
+                                Style="{StaticResource SmallButtonStyle}"
+                                VerticalAlignment="Top"
+                                Visibility="{Binding IsEditingAllowed, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    </Grid>
+                </Border>
+
+                <!-- Основная информация об отделе -->
+                <Border Grid.Row="1" 
+                       Style="{StaticResource CardStyle}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="15">
+                            <TextBlock Text="Основная информация"
+                                     Style="{StaticResource HeaderH2Style}"
+                                     Margin="0,0,0,15"/>
+
+                            <!-- Название отдела -->
+                            <TextBlock Text="Название отдела" 
+                                     Style="{StaticResource LabelTextStyle}"/>
+
+                            <!-- View Mode -->
+                            <TextBlock Text="{Binding Department.Name}"
+                                     Style="{StaticResource BodyTextStyle}"
+                                     Margin="0,0,0,10"
+                                     Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+
+                            <!-- Edit Mode -->
+                            <TextBox Text="{Binding Department.Name, UpdateSourceTrigger=PropertyChanged}"
+                                   Margin="0,0,0,10"
+                                   Padding="5"
+                                   Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                            <!-- Описание -->
+                            <TextBlock Text="Описание" 
+                                     Style="{StaticResource LabelTextStyle}"/>
+
+                            <!-- View Mode -->
+                            <TextBlock Text="{Binding Department.Description, TargetNullValue='Не указано'}"
+                                     Style="{StaticResource BodyTextStyle}"
+                                     TextWrapping="Wrap"
+                                     Margin="0,0,0,10"
+                                     Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+
+                            <!-- Edit Mode -->
+                            <TextBox Text="{Binding Department.Description, UpdateSourceTrigger=PropertyChanged}"
+                                   TextWrapping="Wrap"
+                                   AcceptsReturn="True"
+                                   Height="80"
+                                   Margin="0,0,0,10"
+                                   Padding="5"
+                                   Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                            <!-- Местоположение -->
+                            <TextBlock Text="Местоположение" 
+                                     Style="{StaticResource LabelTextStyle}"
+                                     Margin="0,10,0,0"/>
+
+                            <!-- View Mode -->
+                            <TextBlock Text="{Binding Department.LocationFormatted}"
+                                     Style="{StaticResource BodyTextStyle}"
+                                     Margin="0,0,0,10"
+                                     Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+
+                            <!-- Edit Mode - Location -->
+                            <TextBlock Text="Адрес" 
+                                     Style="{StaticResource CaptionTextStyle}"
+                                     Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <TextBox Text="{Binding Department.Location, UpdateSourceTrigger=PropertyChanged}"
+                                   Margin="0,0,0,10"
+                                   Padding="5"
+                                   Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                            <!-- Edit Mode - Building -->
+                            <TextBlock Text="Здание" 
+                                     Style="{StaticResource CaptionTextStyle}"
+                                     Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <TextBox Text="{Binding Department.Building, UpdateSourceTrigger=PropertyChanged}"
+                                   Margin="0,0,0,10"
+                                   Padding="5"
+                                   Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                            <!-- Edit Mode - Floor -->
+                            <TextBlock Text="Этаж" 
+                                     Style="{StaticResource CaptionTextStyle}"
+                                     Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <TextBox Text="{Binding Department.Floor, UpdateSourceTrigger=PropertyChanged}"
+                                   Margin="0,0,0,10"
+                                   Padding="5"
+                                   Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                            <!-- Бюджет -->
+                            <TextBlock Text="Бюджет" 
+                                     Style="{StaticResource LabelTextStyle}"
+                                     Margin="0,10,0,0"/>
+
+                            <!-- View Mode -->
+                            <TextBlock Text="{Binding Department.BudgetFormatted}"
+                                     Style="{StaticResource BodyTextStyle}"
+                                     Margin="0,0,0,10"
+                                     Visibility="{Binding IsEditing, Converter={StaticResource InverseBooleanToVisibilityConverter}}"/>
+
+                            <!-- Edit Mode - Budget Amount -->
+                            <TextBlock Text="Сумма" 
+                                     Style="{StaticResource CaptionTextStyle}"
+                                     Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <TextBox Text="{Binding Department.Budget, UpdateSourceTrigger=PropertyChanged}"
+                                   Margin="0,0,0,10"
+                                   Padding="5"
+                                   Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                            <!-- Edit Mode - Fiscal Year -->
+                            <TextBlock Text="Финансовый год" 
+                                     Style="{StaticResource CaptionTextStyle}"
+                                     Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                            <TextBox Text="{Binding Department.FiscalYear, UpdateSourceTrigger=PropertyChanged}"
+                                   Margin="0,0,0,10"
+                                   Padding="5"
+                                   Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+
+            <!-- Правая колонка с табами сотрудников и проектов -->
+            <Grid Grid.Column="1" Margin="10,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Tab контролы -->
+                <TabControl Grid.Row="1">
+                    <!-- Вкладка сотрудников -->
+                    <TabItem Header="Сотрудники">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Заголовок и кнопки управления -->
+                            <Grid Grid.Row="0" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Сотрудники отдела"
+                                         Style="{StaticResource HeaderH2Style}"
+                                         Margin="0,0,0,10"/>
+
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <Button Content="Обновить"
+                                            Command="{Binding LoadEmployeesCommand}"
+                                            Style="{StaticResource SmallButtonStyle}"
+                                            Margin="5,0"/>
+
+                                    <Button Content="Управление"
+                                            Command="{Binding ManageEmployeesCommand}"
+                                            Style="{StaticResource SmallButtonStyle}"
+                                            Margin="5,0"
+                                            Visibility="{Binding IsEditingAllowed, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Основная часть - список или управление -->
+                            <Grid Grid.Row="1">
+                                <!-- Список сотрудников (обычный режим) -->
+                                <DataGrid ItemsSource="{Binding Employees}"
+                                         AutoGenerateColumns="False"
+                                         IsReadOnly="True"
+                                         BorderThickness="1"
+                                         BorderBrush="{DynamicResource BorderBrush}"
+                                         Background="Transparent"
+                                         Visibility="{Binding IsManagingEmployees, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="ФИО" 
+                                                         Binding="{Binding FullName}"
+                                                         Width="*"/>
+                                        <DataGridTextColumn Header="Должность" 
+                                                         Binding="{Binding Position}"
+                                                         Width="*"/>
+                                        <DataGridTextColumn Header="Email" 
+                                                         Binding="{Binding Email}"
+                                                         Width="*"/>
+                                        <DataGridTemplateColumn Width="Auto">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Content="Удалить"
+                                                            Command="{Binding DataContext.RemoveEmployeeCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                                            CommandParameter="{Binding}"
+                                                            Style="{StaticResource DangerButtonStyle}"
+                                                            Visibility="{Binding DataContext.IsEditingAllowed, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                    <DataGrid.Style>
+                                        <Style TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Employees.Count}" Value="0">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate>
+                                                                <TextBlock Text="В этом отделе нет сотрудников"
+                                                                         HorizontalAlignment="Center"
+                                                                         VerticalAlignment="Center"
+                                                                         Style="{StaticResource BodyTextStyle}"/>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGrid.Style>
+                                </DataGrid>
+
+                                <!-- Управление сотрудниками -->
+                                <Grid Visibility="{Binding IsManagingEmployees, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" 
+                                             Text="Доступные сотрудники" 
+                                             Style="{StaticResource HeaderH3Style}" 
+                                             Margin="0,0,0,10"/>
+
+                                    <DataGrid Grid.Row="1"
+                                             ItemsSource="{Binding AvailableEmployees}"
+                                             AutoGenerateColumns="False"
+                                             IsReadOnly="True"
+                                             BorderThickness="1"
+                                             BorderBrush="{DynamicResource BorderBrush}"
+                                             Background="Transparent">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="ФИО" 
+                                                             Binding="{Binding FullName}"
+                                                             Width="*"/>
+                                            <DataGridTextColumn Header="Должность" 
+                                                             Binding="{Binding Position}"
+                                                             Width="*"/>
+                                            <DataGridTemplateColumn Width="Auto">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <Button Content="Добавить"
+                                                                Command="{Binding DataContext.AddEmployeeCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                                                CommandParameter="{Binding}"
+                                                                Style="{StaticResource PrimaryButtonStyle}"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                        <DataGrid.Style>
+                                            <Style TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding AvailableEmployees.Count}" Value="0">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate>
+                                                                    <TextBlock Text="Нет доступных сотрудников для добавления"
+                                                                             HorizontalAlignment="Center"
+                                                                             VerticalAlignment="Center"
+                                                                             Style="{StaticResource BodyTextStyle}"/>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGrid.Style>
+                                    </DataGrid>
+
+                                    <Button Grid.Row="2"
+                                            Content="Закрыть"
+                                            Command="{Binding CancelManagementCommand}"
+                                            Style="{StaticResource BaseButtonStyle}"
+                                            HorizontalAlignment="Center"
+                                            Margin="0,10,0,0"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+
+                    <!-- Вкладка проектов -->
+                    <TabItem Header="Проекты">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Заголовок и кнопки управления -->
+                            <Grid Grid.Row="0" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Проекты отдела"
+                                         Style="{StaticResource HeaderH2Style}"
+                                         Margin="0,0,0,10"/>
+
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <Button Content="Обновить"
+                                            Command="{Binding LoadProjectsCommand}"
+                                            Style="{StaticResource SmallButtonStyle}"
+                                            Margin="5,0"/>
+
+                                    <Button Content="Добавить"
+                                            Command="{Binding ManageProjectsCommand}"
+                                            Style="{StaticResource SmallButtonStyle}"
+                                            Margin="5,0"
+                                            Visibility="{Binding IsEditingAllowed, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Список проектов -->
+                            <DataGrid Grid.Row="1"
+                                     ItemsSource="{Binding Projects}"
+                                     AutoGenerateColumns="False"
+                                     IsReadOnly="True"
+                                     BorderThickness="1"
+                                     BorderBrush="{DynamicResource BorderBrush}"
+                                     Background="Transparent">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Название" 
+                                                     Binding="{Binding Name}"
+                                                     Width="*"/>
+                                    <DataGridTextColumn Header="Бюджет" 
+                                                     Binding="{Binding BudgetFormatted}"
+                                                     Width="*"/>
+                                    <DataGridTextColumn Header="Период" 
+                                                     Binding="{Binding DateRangeFormatted}"
+                                                     Width="*"/>
+                                    <DataGridTextColumn Header="Статус" 
+                                                     Binding="{Binding Status}"
+                                                     Width="*"/>
+                                    <DataGridTemplateColumn Width="Auto">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Удалить"
+                                                        Command="{Binding DataContext.RemoveProjectCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                                        CommandParameter="{Binding}"
+                                                        Style="{StaticResource DangerButtonStyle}"
+                                                        Visibility="{Binding DataContext.IsEditingAllowed, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                </DataGrid.Columns>
+                                <DataGrid.Style>
+                                    <Style TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Projects.Count}" Value="0">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <TextBlock Text="У этого отдела нет проектов"
+                                                                     HorizontalAlignment="Center"
+                                                                     VerticalAlignment="Center"
+                                                                     Style="{StaticResource BodyTextStyle}"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.Style>
+                            </DataGrid>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </Grid>
+
+        <!-- Всплывающее окно для выбора руководителя -->
+        <Border Grid.Row="1" 
+               BorderBrush="{DynamicResource BorderBrush}" 
+               BorderThickness="1" 
+               Background="{DynamicResource SurfaceBrush}"
+               Visibility="{Binding IsSelectingHead, Converter={StaticResource BooleanToVisibilityConverter}}"
+               Panel.ZIndex="200">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" 
+                         Text="Выберите руководителя отдела" 
+                         Style="{StaticResource HeaderH2Style}" 
+                         Margin="0,0,0,15"/>
+
+                <DataGrid Grid.Row="1"
+                         ItemsSource="{Binding AvailableEmployees}"
+                         SelectedItem="{Binding SelectedHeadEmployee}"
+                         AutoGenerateColumns="False"
+                         IsReadOnly="True"
+                         BorderThickness="1"
+                         BorderBrush="{DynamicResource BorderBrush}"
+                         Background="Transparent">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ФИО" 
+                                         Binding="{Binding FullName}"
+                                         Width="*"/>
+                        <DataGridTextColumn Header="Должность" 
+                                         Binding="{Binding Position}"
+                                         Width="*"/>
+                        <DataGridTemplateColumn Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Выбрать"
+                                            Command="{Binding DataContext.AssignHeadCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource PrimaryButtonStyle}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Button Grid.Row="2"
+                        Content="Отмена"
+                        Command="{Binding CancelManagementCommand}"
+                        Style="{StaticResource BaseButtonStyle}"
+                        HorizontalAlignment="Center"
+                        Margin="0,15,0,0"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

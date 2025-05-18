@@ -1,0 +1,134 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Базовый стиль текстового поля -->
+    <ControlTemplate x:Key="TextBoxBaseTemplate" TargetType="{x:Type TextBox}">
+        <Border x:Name="border" 
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="4">
+            <Grid>
+                <ScrollViewer x:Name="PART_ContentHost" 
+                            Focusable="false" 
+                            HorizontalScrollBarVisibility="Hidden" 
+                            VerticalScrollBarVisibility="Hidden"
+                            Padding="{TemplateBinding Padding}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Margin="0"/>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="BorderBrush" Value="{DynamicResource InputHoverBorderBrush}"/>
+            </Trigger>
+            <Trigger Property="IsFocused" Value="true">
+                <Setter Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
+                <Setter Property="BorderThickness" Value="2"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Background" Value="{DynamicResource DisabledBackgroundBrush}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource DisabledBorderBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource DisabledTextBrush}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="BaseTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template" Value="{StaticResource TextBoxBaseTemplate}"/>
+    </Style>
+
+    <Style x:Key="SmallTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="8,4"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template" Value="{StaticResource TextBoxBaseTemplate}"/>
+    </Style>
+
+    <Style x:Key="LargeTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="Height" Value="48"/>
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Padding" Value="16,12"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template" Value="{StaticResource TextBoxBaseTemplate}"/>
+    </Style>
+
+    <Style x:Key="MultilineTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="Height" Value="120"/>
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="AcceptsReturn" Value="True"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="Template" Value="{StaticResource TextBoxBaseTemplate}"/>
+    </Style>
+
+    <Style x:Key="SearchTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="Height" Value="36"/>
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="36,8,12,8"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" 
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="18">
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                        Focusable="false" 
+                                        HorizontalScrollBarVisibility="Hidden" 
+                                        VerticalScrollBarVisibility="Hidden"
+                                        Padding="{TemplateBinding Padding}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Margin="0"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" Value="{DynamicResource InputHoverBorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
+                            <Setter Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" Value="{DynamicResource DisabledBackgroundBrush}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource DisabledBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource DisabledTextBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

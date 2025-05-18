@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4e114111192d4be09396a512076ee672" Name="Diagram1">
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.AuditLog" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.DepartmentBudgets" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.DepartmentLocations" Width="1.5" PointX="3" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.Departments" Width="1.5" PointX="0.75" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.EmployeeCompensation" Width="1.5" PointX="8.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.EmployeeContacts" Width="1.5" PointX="8.25" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.EmployeeDepartments" Width="1.5" PointX="3" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.EmployeeProfilePictures" Width="1.5" PointX="8.25" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.EmployeeProjects" Width="1.5" PointX="8.25" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.Employees" Width="1.5" PointX="6" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.Positions" Width="1.5" PointX="3.75" PointY="22.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.ProjectBudgets" Width="1.5" PointX="5.25" PointY="32" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.Projects" Width="1.5" PointX="3" PointY="33.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.ProjectTimelines" Width="1.5" PointX="5.25" PointY="35.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CorporationDepartmentsModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_DepartmentBudgets_Departments" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_DepartmentLocations_Departments" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_EmployeeDepartments_Departments" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_Employees_Departments" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_Projects_Departments" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_EmployeeCompensation_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_EmployeeContacts_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_EmployeeDepartments_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_EmployeeProfilePictures_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_EmployeeProjects_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_EmployeeProjects_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_Employees_Positions" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_ProjectBudgets_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_ProjectTimelines_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="CorporationDepartmentsModel.FK_Departments_HeadEmployee" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
